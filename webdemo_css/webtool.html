@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MicroPython網頁</title> 
+    <style>
+    .block {
+        display: block;
+        width: 80%;
+        height:200px;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 28px;
+        font-size: 160px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .block:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    </style>       
+</head>
+<center><h2>MicroPython 網頁</h2></center>
+<h3>
+webREPL: <a href="http://micropython.org/webrepl/" target="_blank">webrepl</a>
+<br>
+Doc: <a href="https://docs.micropython.org/en/latest/esp8266/esp8266/quickref.html" target="_blank">Quick reference</a>
+</h3>
+<hr>
+
+
+<form>
+    <h3><b>LED (D4):</b></h3><br>
+    <button name="LED" value="ON" type="submit" class="block">ON</button><br>
+    <button name="LED" value="OFF" type="submit" class="block">OFF</button><br>
+</form>
+
+<form>
+    <b>T/H sensor (D3):</b><br>
+    <button name="th_sensor" value="read" type="submit" class="block">讀取溫度</button><br>
+    T=?degree
+</form>
+
+<form>
+    <b>T/H sensor (D3):</b><br>
+    <button name="th_sensor1" value="read" type="submit">Read</button><br>
+    T=?degree
+</form>
+
+<hr>
+GPIO Info. :<br>
+<pre>
+D0 = 16
+D1 = 5  #PWM, Moter A1 speed
+D2 = 4  #PWM, Motor B1 speed
+D3 = 0  #PWM, Motor A2 Dir
+D4 = 2  #PWM, Motor B2 Dir, #Led on board
+D5 = 14 #PWM, Servo
+D6 = 12 #PWM, Servo2
+D7 = 13 #PWM, Servo3
+D8 = 15 #PWM, Servo4
+</pre>
+
+</html>
