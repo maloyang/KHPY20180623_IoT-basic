@@ -1,2 +1,2 @@
-malo-ap
-0928380233
+ap_ssid
+ap_pwd

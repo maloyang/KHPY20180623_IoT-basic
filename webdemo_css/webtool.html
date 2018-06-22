@@ -39,29 +39,30 @@ Doc: <a href="https://docs.micropython.org/en/latest/esp8266/esp8266/quickref.ht
 </form>
 
 <form>
-    <b>T/H sensor (D3):</b><br>
-    <button name="th_sensor" value="read" type="submit" class="block">讀取溫度</button><br>
-    T=?degree
+    <h3><b>Buzzer (D2):</b></h3><br>
+    <button name="buzzer" value="on" type="submit" class="block">ON</button><br>
+    <button name="buzzer" value="off" type="submit" class="block">OFF</button><br>
 </form>
 
 <form>
-    <b>T/H sensor (D3):</b><br>
-    <button name="th_sensor1" value="read" type="submit">Read</button><br>
-    T=?degree
+    <h3><b>T/H sensor (D1):</b></h3><br>
+    <button name="th_sensor" value="read" type="submit" class="block">讀取溫度</button><br>
+    <h3>T=?degree</h3>
 </form>
+
 
 <hr>
 GPIO Info. :<br>
 <pre>
 D0 = 16
-D1 = 5  #PWM, Moter A1 speed
-D2 = 4  #PWM, Motor B1 speed
-D3 = 0  #PWM, Motor A2 Dir
-D4 = 2  #PWM, Motor B2 Dir, #Led on board
-D5 = 14 #PWM, Servo
-D6 = 12 #PWM, Servo2
-D7 = 13 #PWM, Servo3
-D8 = 15 #PWM, Servo4
+D1 = 5  #DHT11, T/H Sensor
+D2 = 4  #Buzzer
+D3 = 0  
+D4 = 2  #Led on board
+D5 = 14 
+D6 = 12 
+D7 = 13 
+D8 = 15 
 </pre>
 
 </html>

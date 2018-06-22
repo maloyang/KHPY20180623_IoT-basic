@@ -49,7 +49,7 @@ my_sn = '%02X-%02X-%02X-%02X' %(uid[0], uid[1], uid[2], uid[3])
 ap_if = network.WLAN(network.AP_IF)
 #ap_if.ifconfig([my_ip, my_mask, my_gw, my_dns])
 
-my_ssid = 'up_%s' %(sta_ip)
+my_ssid = 'upy_%s_%s' %(my_sn, sta_ip)
 #ap_if.config(essid = my_ssid)#改ssid，馬上生效
 ap_if.config(essid=my_ssid, authmode=network.AUTH_WPA_WPA2_PSK, password="12345678")
 #DHCP 功能micropython預設就有，不用設定
@@ -97,20 +97,10 @@ NOTE_A4=440
 NOTE_B4=494
 buzzer = PWM(Pin(D2), freq=1000, duty=0)
 
-# servo
-SV_ANGLE_0 = 40
-SV_ANGLE_90 = 77
-SV_ANGLE_180 = 115
-servo = PWM(Pin(D5), freq=50)
-servo2 = PWM(Pin(D6), freq=50)
-servo3 = PWM(Pin(D7), freq=50)
-servo4 = PWM(Pin(D8), freq=50)
 
 # th_sensor
-th_sensor = dht.DHT11(Pin(D3))
+th_sensor = dht.DHT11(Pin(D1))
 
-# HCSR04, not work, TODO: later
-#sr04 = HCSR04(trigger_pin=D7, echo_pin=D8)
 
 #Setup Socket WebServer
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -121,32 +111,13 @@ while True:
     print("Got a connection from %s" % str(addr))
     request = conn.recv(1024)
     print("Content = %s" % str(request))
-    '''
-    Got a connection from ('10.107.85.22', 64869)
-    Content = b'GET /favicon.ico HTTP/1.1\r\nHost: 10.107.85.21\r\nConnection: keep-alive\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36\r\nAccept: image/webp,image/apng,image/*,*/*;q=0.8\r\nReferer: http://10.107.85.21/\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7\r\n\r\n'
-    '''
+
     request = str(request)
     led_on = request.find('GET /?LED=ON')
     led_off = request.find('GET /?LED=OFF')
     buzzer_on = request.find('GET /?buzzer=on')
     buzzer_off = request.find('GET /?buzzer=off')
-    buzzer_play = request.find('GET /?buzzer=play')
-    servo_0 = request.find('GET /?servo=0')
-    servo_90 = request.find('GET /?servo=90')
-    servo_180 = request.find('GET /?servo=180')
-    servo2_0 = request.find('GET /?servo2=0')
-    servo2_90 = request.find('GET /?servo2=90')
-    servo2_180 = request.find('GET /?servo2=180')
-    servo3_0 = request.find('GET /?servo3=0')
-    servo3_90 = request.find('GET /?servo3=90')
-    servo3_180 = request.find('GET /?servo3=180')
-    servo4_0 = request.find('GET /?servo4=0')
-    servo4_90 = request.find('GET /?servo4=90')
-    servo4_180 = request.find('GET /?servo4=180')
     th_sensor_read = request.find('GET /?th_sensor=read')
-    sr04_read = request.find('GET /?sr04=read')
-    runfile = request.find('GET /?runfile=')
-
 
 
     if led_on >= 0:
@@ -161,49 +132,7 @@ while True:
     if buzzer_off >= 0:
         print('buzzer off')
         Tune(buzzer, 0, 10)
-    if buzzer_play >= 0:
-        melody = [NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4, NOTE_C4, 0]
-        print('buzzer play')
-        for tn in melody:
-            print('Tune:', tn)
-            Tune(buzzer, tn)
-            #Tune(buzzer, 0, 100)
-    if servo_0 >= 0:
-        print('servo turn to 0')
-        servo.duty(SV_ANGLE_0)
-    if servo_90 >= 0:
-        print('servo turn to 0')
-        servo.duty(SV_ANGLE_90)
-    if servo_180 >= 0:
-        print('servo turn to 0')
-        servo.duty(SV_ANGLE_180)
-    if servo2_0 >= 0:
-        print('servo2 turn to 0')
-        servo2.duty(SV_ANGLE_0)
-    if servo2_90 >= 0:
-        print('servo2 turn to 0')
-        servo2.duty(SV_ANGLE_90)
-    if servo2_180 >= 0:
-        print('servo2 turn to 0')
-        servo2.duty(SV_ANGLE_180)
-    if servo3_0 >= 0:
-        print('servo3 turn to 0')
-        servo3.duty(SV_ANGLE_0)
-    if servo3_90 >= 0:
-        print('servo3 turn to 0')
-        servo3.duty(SV_ANGLE_90)
-    if servo3_180 >= 0:
-        print('servo3 turn to 0')
-        servo3.duty(SV_ANGLE_180)
-    if servo4_0 >= 0:
-        print('servo4 turn to 0')
-        servo4.duty(SV_ANGLE_0)
-    if servo4_90 >= 0:
-        print('servo4 turn to 0')
-        servo4.duty(SV_ANGLE_90)
-    if servo4_180 >= 0:
-        print('servo4 turn to 0')
-        servo4.duty(SV_ANGLE_180)
+
     my_t = None
     if th_sensor_read >= 0:
         print('th_sensor read')
@@ -211,29 +140,6 @@ while True:
         my_t = th_sensor.temperature()
         print('T=', th_sensor.temperature())
         print('H=', th_sensor.humidity())
-    my_distance = None
-    if sr04_read >= 0:
-        print('sr04 read')
-        my_distance = -1 #sr04.distance_cm()
-        print('distance=', my_distance)
-    my_run_code_result = None
-    if runfile >= 0:
-        print('run file')
-        try:
-            file_name = request.split('\r\n', 1)[0].split('GET /?runfile=')[1].split()[0]
-            print('file_name: ', file_name)
-            if file_name in os.listdir():
-                print('file got!')
-                f = open(file_name)
-                run_code = f.read()
-                f.close()
-                exec(run_code)
-                my_run_code_result = 'OK'
-            else:
-                print('no file!')
-                my_run_code_result = 'no file!'
-        except Exception as ex:
-            my_run_code_result = 'Exception:<br>[%s]%s' %(type(ex), str(ex))
 
     f = open('webtool.html')
 
@@ -244,14 +150,6 @@ while True:
             html = html.replace('T=?degree', 'T=%d degree' %(my_t))
         else:
             html = html.replace('T=?degree', '')
-        if my_distance:
-            html = html.replace('distance=? cm', 'distance=%s cm' %(my_distance))
-        else:
-            html = html.replace('distance=? cm', '')
-        if my_run_code_result:
-            html = html.replace('run result:', 'run result: %s' %(my_run_code_result))
-        else:
-            html = html.replace('run result:', '')
         #conn.send(html)
         conn.sendall(html) #改用send all就不會有資料傳一半的問題
         if(len(html)<=0):

@@ -19,11 +19,10 @@ Doc: <a href="https://docs.micropython.org/en/latest/esp8266/esp8266/quickref.ht
 <b>Buzzer (D2):</b><br>
 <button name="buzzer" value="on" type="submit">ON</button><br>
 <button name="buzzer" value="off" type="submit">OFF</button><br>
-<button name="buzzer" value="play" type="submit">Play</button><br>
 </form>
 
 <form>
-<b>T/H sensor (D3):</b><br>
+<b>T/H sensor (D1):</b><br>
 <button name="th_sensor" value="read" type="submit">Read</button><br>
 T=?degree
 </form>
@@ -32,14 +31,14 @@ T=?degree
 GPIO Info. :<br>
 <pre>
 D0 = 16
-D1 = 5  #PWM
-D2 = 4  #PWM
-D3 = 0  #PWM
-D4 = 2  #PWM, #Led on board
-D5 = 14 #PWM
-D6 = 12 #PWM
-D7 = 13 #PWM
-D8 = 15 #PWM
+D1 = 5  #DHT11, T/H Sensor
+D2 = 4  #Buzzer
+D3 = 0  
+D4 = 2  #Led on board
+D5 = 14 
+D6 = 12 
+D7 = 13 
+D8 = 15 
 </pre>
 
 </html>
